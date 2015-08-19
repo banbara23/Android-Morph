@@ -19,3 +19,7 @@ Mini size: Only used to create visual continuity with other screen elements
 デフォルトのサイズ：ほとんどのユースケースについて
 ミニサイズは：のみ、他の画面要素と視覚的な連続を作成するために使用されます
 ```
+
+[サンプル動作1](https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0B8v7jImPsDi-NF9TWTN0Q3lMZWc/components-buttons-fab-transition_morph_01.webm)
+
+[サンプル動作2](https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0B8v7jImPsDi-c0UwMFAyQU5Jb1U/components-buttons-fab-transition_morph_02.webm)
