@@ -1,8 +1,9 @@
+
 package com.example.ikemurakazutaka.android_morph;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,13 @@ import com.example.ikemurakazutaka.android_morph.dummy.DummyContent;
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
+ * Large screen devices (such as tablets) are supported by replacing the
+ * ListView with a GridView.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
- * interface.
+ * Activities containing this fragment MUST implement the
+ * {@link OnFragmentInteractionListener} interface.
  */
-public class ItemFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class ItemFragment extends Fragment implements AbsListView.OnItemClickListener, AbsListView.OnScrollListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +41,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
+    private OnScrollListener mOnScrollListener;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -76,11 +78,13 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+
+        mOnScrollListener = (OnScrollListener) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Set the adapter
@@ -89,6 +93,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
+        mListView.setOnScrollListener(this);
 
         return view;
     }
@@ -96,18 +101,18 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        // try {
+        // mListener = (OnFragmentInteractionListener) activity;
+        // } catch (ClassCastException e) {
+        // throw new ClassCastException(activity.toString()
+        // + " must implement OnFragmentInteractionListener");
+        // }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
+        // mListener = null;
     }
 
     @Override
@@ -132,19 +137,27 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        // Log.d("ItemFragment", "scrollState:" + scrollState);
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        mOnScrollListener.onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
+    }
+
+    private void showToolbar() {
+
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
+    }
+
+    public interface OnScrollListener {
+        public void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount);
     }
 
 }
